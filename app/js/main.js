@@ -28,22 +28,30 @@ exports['default'] = config;
 module.exports = exports['default'];
 
 },{}],2:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AddController = function AddController() {
+var AddController = function AddController(ContactService) {
 
   // console.log('Hello from AddController');
 
   var vm = this;
+
+  vm.addContact = addContact;
+
+  function addContact(contactObj) {
+    ContactService.addContact(contactObj).then(function (res) {
+      console.log(res);
+    });
+  }
 };
 
-AddController.$inject = [];
+AddController.$inject = ['ContactService'];
 
-exports["default"] = AddController;
-module.exports = exports["default"];
+exports['default'] = AddController;
+module.exports = exports['default'];
 
 },{}],3:[function(require,module,exports){
 "use strict";
@@ -90,9 +98,49 @@ var _controllersAddController = require('./controllers/add.controller');
 
 var _controllersAddController2 = _interopRequireDefault(_controllersAddController);
 
-_angular2['default'].module('app', ['ui.router']).config(_config2['default']).controller('HomeController', _controllersHomeController2['default']).controller('AddController', _controllersAddController2['default']);
+// Services
 
-},{"./config":1,"./controllers/add.controller":2,"./controllers/home.controller":3,"angular":7,"angular-ui-router":5}],5:[function(require,module,exports){
+var _servicesContactService = require('./services/contact.service');
+
+var _servicesContactService2 = _interopRequireDefault(_servicesContactService);
+
+_angular2['default'].module('app', ['ui.router']).config(_config2['default']).constant('PARSE', PARSE).controller('HomeController', _controllersHomeController2['default']).controller('AddController', _controllersAddController2['default']).service('ContactService', _servicesContactService2['default']);
+
+},{"./config":1,"./controllers/add.controller":2,"./controllers/home.controller":3,"./services/contact.service":5,"angular":8,"angular-ui-router":6}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var ContactService = function ContactService($http, PARSE) {
+
+  var url = PARSE.URL + 'classes/contact';
+
+  this.addContact = addContact;
+  // this.getAllContacts = getAllContacts;
+
+  function Contact(contactObj) {
+    this.firstName = contactObj.firstName;
+    this.lastName = contactObj.lastName;
+    this.email = contactObj.email;
+    this.cellPhone = contactObj.cellPhone;
+    this.website = contactObj.website;
+    this.comment = contactObj.comment;
+    this.notes = contactObj.notes;
+  };
+
+  function addContact(contactObj) {
+    var contact = new Contact(contactObj);
+    return $http.post(url, contact, PARSE.CONFIG);
+  };
+};
+
+ContactService.$inject = ['$http', 'PARSE'];
+
+exports['default'] = ContactService;
+module.exports = exports['default'];
+
+},{}],6:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4463,7 +4511,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33368,11 +33416,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":6}]},{},[4])
+},{"./angular":7}]},{},[4])
 
 
 //# sourceMappingURL=main.js.map
