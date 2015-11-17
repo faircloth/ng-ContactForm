@@ -9,7 +9,13 @@ let config = function($stateProvider, $urlRouterProvider) {
     })
     .state('root.home', {
       url: '/',
+      controller: 'HomeController as vm',
       templateUrl: 'templates/home.tpl.html'
+    })
+    .state('root.add-contact', {
+      url: '/add-contact',
+      controller: 'AddController as vm',
+      templateUrl: 'templates/add-contact.tpl.html'
     });
 
 
