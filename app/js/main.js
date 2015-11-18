@@ -58,12 +58,32 @@ var AddController = function AddController(ContactService, $state) {
 
   vm.addContact = addContact;
 
+  vm.errorFN = 'Please add a first name';
+  vm.errorLN = 'Please add a last name';
+  vm.errorEMAIL = 'Please enter a valid email address including @';
+  vm.errorWEB = 'Please enter a valid website starting with http(s)://';
+  vm.errorMSG = 'Please enter a message';
+
+  var vfirst = false;
+  var vlast = false;
+  var vemail = false;
+  var vweb = false;
+  var vmsg = false;
+
   function addContact(contactObj) {
     ContactService.addContact(contactObj).then(function (res) {
       console.log(res);
       $state.go('root.home');
     });
   }
+
+  var validateFN = function validateFN(firstName) {
+    if (firstName < 1) {
+      vm.errorFN = "Please add your first name";
+    } else {
+      vm.errorFN = 'Cool';
+    }
+  };
 };
 
 AddController.$inject = ['ContactService', '$state'];

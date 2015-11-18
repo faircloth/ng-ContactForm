@@ -4,6 +4,7 @@ let HomeController = function(ContactService) {
 
   let vm = this;
 
+
   ContactService.getAllContacts().then( (res) =>{
     console.log(res);
     vm.myContacts = res.data.results;

@@ -1,14 +1,17 @@
 <h2>Add a new contact</h2>
 
 <form ng-submit="vm.addContact(contact)">
-  <input type="text" placeholder="First name" required ng-model="contact.firstName">
-  <input placeholder="Last name" ng-model="contact.lastName" required>
-  <input placeholder="Email" ng-model="contact.email" required type="email">
+  
+
+  <input type="text" placeholder="First name" required ng-model="contact.firstName">{{vm.errorFN}}
+  <input placeholder="Last name" ng-model="contact.lastName" required>{{vm.errorLN}}
+  <input placeholder="Email" ng-model="contact.email" required type="email">{{vm.errorEMAIL}}
 <!--   <input placeholder="Cell Phone Number" ng-model="contact.cellPhone"> -->
-  <input placeholder="Website" ng-model="contact.website" ng-pattern"[/^https?:\/\//i]" required>
-  <textarea placeholder="Message" ng-model="contact.comment" required>
+  <input placeholder="Website (note: must begin with http:// or https://)" ng-model="contact.website" ng-pattern"[/^https?:\/\//i]" required>{{vm.errorWEB}}
+  <textarea placeholder="A friendly message" ng-model="contact.comment" required></textarea>{{vm.errorMSG}}
  <!--  <input placeholder="Notes" ng-model="contact.notes"> -->
   <button>Submit</button>
 </form>
   
+
 </form>
