@@ -50,43 +50,66 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AddController = function AddController(ContactService, $state) {
-
-  // console.log('Hello from AddController');
+var AddController = function AddController(ContactService, $state, $scope) {
 
   var vm = this;
 
   vm.addContact = addContact;
 
-  vm.errorFN = 'Please add a first name';
-  vm.errorLN = 'Please add a last name';
-  vm.errorEMAIL = 'Please enter a valid email address including @';
-  vm.errorWEB = 'Please enter a valid website starting with http(s)://';
-  vm.errorMSG = 'Please enter a message';
+  $scope.$watch('contact.email', function (newVal) {
 
-  var vfirst = false;
-  var vlast = false;
-  var vemail = false;
-  var vweb = false;
-  var vmsg = false;
+    if (!newVal) return;
+
+    if (!validateEmail(newVal)) {
+      return console.log('email needs an @symbol');
+    }
+  });
 
   function addContact(contactObj) {
-    ContactService.addContact(contactObj).then(function (res) {
-      console.log(res);
-      $state.go('root.home');
-    });
+
+    if (!validateEmpty(contactObj.firstName)) {
+      console.log('first name is empty');
+    }
+
+    if (!validateEmpty(contactObj.lastName)) {
+      console.log('last name is empty');
+    }
+
+    if (!validateEmpty(contactObj.email)) {
+      console.log('email is empty');
+    }
+
+    if (!validateEmpty(contactObj.website)) {
+      console.log('website is empty');
+    }
+
+    if (!validateWebsite(contactObj.website)) {
+      return console.log('website needs an http(s)');
+    }
+
+    console.log('added to the server');
+
+    // ContactService.addContact(contactObj).then( (res) =>{
+    //   console.log(res);
+    //   $state.go('root.home');
+    // });
   }
 
-  var validateFN = function validateFN(firstName) {
-    if (firstName < 1) {
-      vm.errorFN = "Please add your first name";
-    } else {
-      vm.errorFN = 'Cool';
-    }
-  };
+  function validateEmpty(field) {
+    return field ? true : false;
+  }
+
+  function validateEmail(field) {
+    return field.indexOf('@') >= 0 ? true : false;
+  }
+
+  function validateWebsite(field) {
+    var pattern = /^https?:\/\//i;
+    return pattern.test(field);
+  }
 };
 
-AddController.$inject = ['ContactService', '$state'];
+AddController.$inject = ['ContactService', '$state', '$scope'];
 
 exports['default'] = AddController;
 module.exports = exports['default'];
