@@ -1,5 +1,14 @@
 <h2>Add a new contact</h2>
 
-<form ng-submit=>
+<form ng-submit="vm.addContact(contact)">
+  <input type="text" placeholder="First name" required ng-model="contact.firstName">
+  <input placeholder="Last name" ng-model="contact.lastName" required>
+  <input placeholder="Email" ng-model="contact.email" required type="email">
+<!--   <input placeholder="Cell Phone Number" ng-model="contact.cellPhone"> -->
+  <input placeholder="Website" ng-model="contact.website" ng-pattern"[/^https?:\/\//i]" required>
+  <textarea placeholder="Message" ng-model="contact.comment" required>
+ <!--  <input placeholder="Notes" ng-model="contact.notes"> -->
+  <button>Submit</button>
+</form>
   
 </form>

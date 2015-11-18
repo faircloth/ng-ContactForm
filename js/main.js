@@ -4,6 +4,9 @@ import 'angular-ui-router';
 // Config Block
 import config from './config';
 
+// Parse
+import PARSE from './constants/parse.constant';
+
 // Controllers
 import HomeController from './controllers/home.controller';
 import AddController from './controllers/add.controller';

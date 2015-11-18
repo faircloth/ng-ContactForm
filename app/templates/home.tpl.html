@@ -1,1 +1,10 @@
 <h2>Home page</h2>
+
+<div class="contact-card" ng-repeat="contact in vm.myContacts">
+  <p>{{contact.firstName}} {{contact.lastName}}</p>
+  <p>{{contact.email}}</p>
+  <!-- <p>Phone: {{contact.cellPhone}}</p> -->
+ <!--  <p>{{contact.website}}</p>
+  <p>{{contact.comment}}</p>
+  <p>{{contact.note}}</p> -->
+</div>

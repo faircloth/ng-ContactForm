@@ -3,7 +3,7 @@ let ContactService = function($http, PARSE) {
   let url = PARSE.URL + 'classes/contact';
 
   this.addContact = addContact;
-  // this.getAllContacts = getAllContacts;
+  this.getAllContacts = getAllContacts;
 
   
   function Contact (contactObj) {
@@ -14,13 +14,17 @@ let ContactService = function($http, PARSE) {
     this.website = contactObj.website;
     this.comment = contactObj.comment;
     this.notes = contactObj.notes;
-  };
+  }
 
 
   function addContact (contactObj) {
     let contact = new Contact (contactObj);
     return $http.post(url, contact, PARSE.CONFIG);
-  };
+  }
+
+  function getAllContacts () {
+    return $http.get(url, PARSE.CONFIG);
+  }
 
 };
 

@@ -33,7 +33,24 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AddController = function AddController(ContactService) {
+exports['default'] = {
+  URL: 'https://api.parse.com/1/',
+  CONFIG: {
+    headers: {
+      'X-Parse-Application-Id': 'pOZajrDs9JYTPJF2myB9ug0cYvJIn6UTfdIvV2KU',
+      'X-Parse-REST-API-Key': '4pwKcvMX0CWenm55iKW21Sp3tB36Qh5vOhFZ2aWL'
+    }
+  }
+};
+module.exports = exports['default'];
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var AddController = function AddController(ContactService, $state) {
 
   // console.log('Hello from AddController');
 
@@ -44,34 +61,41 @@ var AddController = function AddController(ContactService) {
   function addContact(contactObj) {
     ContactService.addContact(contactObj).then(function (res) {
       console.log(res);
+      $state.go('root.home');
     });
   }
 };
 
-AddController.$inject = ['ContactService'];
+AddController.$inject = ['ContactService', '$state'];
 
 exports['default'] = AddController;
 module.exports = exports['default'];
 
-},{}],3:[function(require,module,exports){
-"use strict";
+},{}],4:[function(require,module,exports){
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var HomeController = function HomeController() {
+var HomeController = function HomeController(ContactService) {
 
   // console.log('Hello from HomeController');
 
   var vm = this;
+
+  ContactService.getAllContacts().then(function (res) {
+    console.log(res);
+    vm.myContacts = res.data.results;
+    console.log(vm.myContacts);
+  });
 };
 
-HomeController.$inject = [];
+HomeController.$inject = ['ContactService'];
 
-exports["default"] = HomeController;
-module.exports = exports["default"];
+exports['default'] = HomeController;
+module.exports = exports['default'];
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -87,6 +111,12 @@ require('angular-ui-router');
 var _config = require('./config');
 
 var _config2 = _interopRequireDefault(_config);
+
+// Parse
+
+var _constantsParseConstant = require('./constants/parse.constant');
+
+var _constantsParseConstant2 = _interopRequireDefault(_constantsParseConstant);
 
 // Controllers
 
@@ -104,9 +134,9 @@ var _servicesContactService = require('./services/contact.service');
 
 var _servicesContactService2 = _interopRequireDefault(_servicesContactService);
 
-_angular2['default'].module('app', ['ui.router']).config(_config2['default']).constant('PARSE', PARSE).controller('HomeController', _controllersHomeController2['default']).controller('AddController', _controllersAddController2['default']).service('ContactService', _servicesContactService2['default']);
+_angular2['default'].module('app', ['ui.router']).config(_config2['default']).constant('PARSE', _constantsParseConstant2['default']).controller('HomeController', _controllersHomeController2['default']).controller('AddController', _controllersAddController2['default']).service('ContactService', _servicesContactService2['default']);
 
-},{"./config":1,"./controllers/add.controller":2,"./controllers/home.controller":3,"./services/contact.service":5,"angular":8,"angular-ui-router":6}],5:[function(require,module,exports){
+},{"./config":1,"./constants/parse.constant":2,"./controllers/add.controller":3,"./controllers/home.controller":4,"./services/contact.service":6,"angular":9,"angular-ui-router":7}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -117,7 +147,7 @@ var ContactService = function ContactService($http, PARSE) {
   var url = PARSE.URL + 'classes/contact';
 
   this.addContact = addContact;
-  // this.getAllContacts = getAllContacts;
+  this.getAllContacts = getAllContacts;
 
   function Contact(contactObj) {
     this.firstName = contactObj.firstName;
@@ -127,12 +157,16 @@ var ContactService = function ContactService($http, PARSE) {
     this.website = contactObj.website;
     this.comment = contactObj.comment;
     this.notes = contactObj.notes;
-  };
+  }
 
   function addContact(contactObj) {
     var contact = new Contact(contactObj);
     return $http.post(url, contact, PARSE.CONFIG);
-  };
+  }
+
+  function getAllContacts() {
+    return $http.get(url, PARSE.CONFIG);
+  }
 };
 
 ContactService.$inject = ['$http', 'PARSE'];
@@ -140,7 +174,7 @@ ContactService.$inject = ['$http', 'PARSE'];
 exports['default'] = ContactService;
 module.exports = exports['default'];
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4511,7 +4545,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33416,11 +33450,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":7}]},{},[4])
+},{"./angular":8}]},{},[5])
 
 
 //# sourceMappingURL=main.js.map

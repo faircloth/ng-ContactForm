@@ -6391,9 +6391,22 @@ body {
   background: #e2ebf3; }
 
 .container {
-  width: 500px;
+  width: 800px;
   min-height: 500px;
-  margin: 30px auto;
-  border: 1px solid black; }
+  margin: 30px auto; }
+
+.contact-card {
+  width: 28%;
+  margin: 2%;
+  height: 200px;
+  display: inline-block;
+  background: green;
+  color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: center; }
+
+textarea {
+  height: 200px; }
 
 /*# sourceMappingURL=main.css.map */
