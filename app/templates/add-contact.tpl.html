@@ -1,27 +1,28 @@
-<h2>Add a new contact</h2>
 
 <form ng-submit="vm.addContact(contact)">
+<h2>Add a new contact</h2>
   
   <input 
-    type="text" 
     placeholder="First name" 
-    required ng-model="contact.firstName">
+    ng-model="contact.firstName">
+    <label ng-show="contact.fnError" class="error-message">{{ contact.fnError }}</label>
   <input 
     placeholder="Last name" 
     ng-model="contact.lastName">
+    <label ng-show="contact.lnError" class="error-message">{{ contact.lnError }}</label>
   <input 
     placeholder="Email" 
-    ng-model="contact.email" 
-    type="email">
+    ng-model="contact.email" >
+    <label ng-show="contact.emailError" class="error-message">{{ contact.emailError }}</label>
   <input 
     placeholder="Website (note: must begin with http:// or https://)" 
-    ng-model="contact.website" 
-    ng-pattern"[/^https?:\/\//i]">
+    ng-model="contact.website" >
+     <label ng-show="contact.webError" class="error-message">{{ contact.webError }}</label>
   <textarea 
     placeholder="A friendly message" 
     ng-model="contact.comment">
   </textarea>
-  <small>{{vm.errorMSG}}</small>
+  <label ng-show="contact.commentError" class="error-message">{{ contact.commentError }}</label>
   <button>Submit</button>
 </form>
   

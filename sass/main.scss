@@ -12,20 +12,42 @@ body {
   min-height: 500px;
   margin: 30px auto;
   // border: 1px solid black;
+  
+  form {
+    width: 500px;
+    margin: 8px auto;
+  }
+
+  input {
+    margin-top: 15px;
+    margin-bottom: 2px;
+  }
 }
 
 .contact-card {
-  width: 28%;
+  width: 40%;
   margin: 2%;
-  height: 200px;
   display: inline-block;
-  background: green;
-  color: white;
+  background: lightblue;
+  min-height: 400px;
+  color: black;
   border: 1px solid black;
-  border-radius: 10px;
-  text-align: center;
+  padding: 10px;
+
+  hr {
+    color: blue;
+    border: .1em dashed black;
+  }
 }
 
 textarea {
   height: 200px;
+  margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  padding-top: 0px;
+  margin-top: 0px;
 }
